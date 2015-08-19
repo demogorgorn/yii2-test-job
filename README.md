@@ -46,7 +46,7 @@ codecept run
 ```
 
 
-**Бэкап базы данных
+**Бэкап базы данных**
 schema/backup.sql
 
 
