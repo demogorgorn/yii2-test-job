@@ -43,7 +43,7 @@ $config = [
                 'project/create' => 'project/create',
                 'project/update/<id:\d+>' => 'project/update',
 
-                'users' => 'users/index',
+                'users' => 'user/index',
             ]
         ],
         'log' => [

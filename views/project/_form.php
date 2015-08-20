@@ -67,7 +67,7 @@ use yii\helpers\Html;
                         <div class="col-lg-5">
                             <?=Html::activeTextInput($model, 'user[]', [
                                 'class' => 'form-control',
-                                'placeholder' => 'Имя пользователя'
+                                'placeholder' => 'Имя пользователя',
                             ])?>
                         </div>
                         <div class="row col-lg-6">

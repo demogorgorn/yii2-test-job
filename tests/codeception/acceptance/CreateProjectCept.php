@@ -32,5 +32,4 @@ if (method_exists($I, 'wait')) {
     $I->wait(3);
 }
 
-$I->dontSeeElement('#form-project');
 $I->see('Данные успешно сохранены');

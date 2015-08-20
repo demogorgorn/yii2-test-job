@@ -54,5 +54,8 @@ codecept run
 schema/backup.sql
 
 
+***tests/codeception/acceptance.suite.yml - установить свой url***
+
+
 # Дополнительная информация
 Затраченное время около 12 часов

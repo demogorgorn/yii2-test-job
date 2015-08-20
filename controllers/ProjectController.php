@@ -79,7 +79,6 @@ class ProjectController extends Controller
         $positionsArray = ArrayHelper::map($positionsArray, 'id', 'name');
 
         if (Yii::$app->request->isPost) {
-
             $model->load(Yii::$app->request->post());
             if ($model->validate()) {
                 if ($model->updateProject()) {

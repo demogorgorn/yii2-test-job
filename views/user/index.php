@@ -35,13 +35,13 @@ use yii\widgets\LinkPager;
                                 <p class="list-group-item-text">
                                     <?php
                                         if ($model->countProjects) {
-                                            echo 'Принял участие в ' . \Yii::t(
+                                            echo 'Пользователь принял участие в ' . \Yii::t(
                                                 'app',
                                                 '{n, plural,  one{# проекте} few{# проектах} many{# проектах} other{# проектах}}',
                                                 ['n' => $model->countProjects]
                                             );
                                         } else {
-                                            echo Html::tag('span', 'Не принимал участия в проектах', ['style' => 'color: silver']);
+                                            echo Html::tag('span', 'Пользователь не принимал участия в проектах', ['style' => 'color: silver']);
                                         }
                                     ?>
                                 </p>
