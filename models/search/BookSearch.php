@@ -3,15 +3,15 @@
 namespace app\models\search;
 
 use yii\data\ActiveDataProvider;
-use app\models\Position;
+use app\models\Book;
 use yii\base\Model;
 use Yii;
 
 /**
- * Class PositionSearch
+ * Book Search
  * @package app\models\search
  */
-class PositionSearch extends Model
+class BookSearch extends Model
 {
     /**
      * Создает экземпляр ActiveDataProvider с поисковым запросом
@@ -20,16 +20,18 @@ class PositionSearch extends Model
      */
     public function search()
     {
-        $query = Position::find();
+        $query = Book::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
                 'defaultOrder' => [
-                    'id' => SORT_ASC,
+                    'date_create' => SORT_DESC,
                 ],
             ],
-            'pagination' => false,
+            'pagination' => [
+                'defaultPageSize' => 10,
+            ],
         ]);
 
         return $dataProvider;

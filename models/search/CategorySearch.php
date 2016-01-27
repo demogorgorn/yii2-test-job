@@ -3,15 +3,15 @@
 namespace app\models\search;
 
 use yii\data\ActiveDataProvider;
-use app\models\User;
+use app\models\Category;
 use yii\base\Model;
 use Yii;
 
 /**
- * User Search
+ * Category Search
  * @package app\models\search
  */
-class UserSearch extends Model
+class CategorySearch extends Model
 {
     /**
      * Создает экземпляр ActiveDataProvider с поисковым запросом
@@ -20,13 +20,13 @@ class UserSearch extends Model
      */
     public function search()
     {
-        $query = User::find();
+        $query = Category::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
                 'defaultOrder' => [
-                    'date_create' => SORT_DESC,
+                    'id' => SORT_DESC,
                 ],
             ],
             'pagination' => [

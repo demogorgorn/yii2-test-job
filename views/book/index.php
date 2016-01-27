@@ -5,20 +5,25 @@
 
 use yii\helpers\Url;
 use yii\helpers\Html;
-use app\helpers\BookHelper;
 use yii\widgets\LinkPager;
+use app\helpers\CategoryHelper;
+use app\helpers\UserHelper;
 
-$this->title = 'Авторы';
+$this->title = 'Книги';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Авторы</h1>
+        <h1><?= Html::encode($this->title) ?></h1>
+        <?php if (!Yii::$app->user->isGuest): ?>
+            <?=Html::a('Создать', ['/book/create'], ['class' => 'btn btn-success'])?>
+        <?php endif; ?>
     </div>
 
     <div class="body-content">
+
         <?php if ($dataProvider->getModels()):
             $countModels = count($dataProvider->getModels());
             ?>
@@ -34,15 +39,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
 
                     <?php if ($key % 2 || ($key+1) == $countModels): ?>
-                        </div>
+                       </div>
                     <?php endif; ?>
+
                 <?php endforeach; ?>
             </div>
+
             <?= LinkPager::widget([
                 'pagination' => $dataProvider->pagination,
             ]); ?>
+
         <?php else: ?>
-            <div class="alert alert-danger">Нет авторов</div>
+            <div class="alert alert-danger">Нет книг</div>
         <?php endif; ?>
 
     </div>

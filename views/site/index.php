@@ -1,63 +1,37 @@
 <?php
 
 /**
- * Главная страница
  * @var $this yii\web\View
- * @var app\models\search\ProjectSearch $projectDataProvider
- * @var app\models\search\PositionSearch $positionDataProvider
  */
-$this->title = 'Управление проектами';
+$this->title = 'Онлайн библиотека';
 
 use yii\helpers\Url;
 use yii\helpers\Html;
-use app\helpers\ProjectHelper;
+
+$this->title = 'О нас';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-index">
-    <div class="jumbotron">
-        <h1>Управление проектами</h1>
-        <p><a class="btn btn-lg btn-success" href="<?=Url::toRoute(['/project/create'])?>">Создать проект</a></p>
+
+<?php if (Yii::$app->session->hasFlash('danger')): ?>
+    <div class="alert alert-danger">
+        <?=Yii::$app->session->getFlash('danger') ?>
     </div>
-    <div class="body-content">
-        <div class="row">
-            <div class="col-lg-8">
-                <h2>Последние проекты:</h2>
-                <?php if (Yii::$app->session->hasFlash('success')): ?>
-                    <div class="alert alert-success">
-                        <?=Yii::$app->session->getFlash('success') ?>
-                    </div>
-                <?php endif; ?>
-                <?php if ($projectDataProvider->getModels()): ?>
-                    <?php foreach ($projectDataProvider->getModels() as $model): ?>
-                        <div class="list-group">
-                            <?=ProjectHelper::getStatus($model->status)?>
-                            <div class="list-group-item clearfix">
-                                <h4 class="list-group-item-heading"><?=ProjectHelper::getName($model->name)?></h4>
-                                <p class="list-group-item-text"><?=ProjectHelper::getDescription($model->description)?></p>
-                                <br/>
-                                <p class="list-group-item-text">
-                                    <span class="text-primary pull-left"><?=ProjectHelper::getPositions($model->node)?></span>
-                                    <a href="<?=Url::toRoute(['/project/update', 'id' => $model->id])?>" class="pull-right">Редактировать проект</a>
-                                </p>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <div class="alert alert-danger">Нет проектов</div>
-                <?php endif; ?>
-                <p><a class="btn btn-default" href="<?=Url::toRoute(['/project/index'])?>">Все проекты &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Должности:</h2>
-                <?php if ($positionDataProvider->getModels()): ?>
-                    <ol>
-                        <?php foreach ($positionDataProvider->getModels() as $model): ?>
-                            <li><?=$model->name?></li>
-                        <?php endforeach; ?>
-                    </ol>
-                <?php else: ?>
-                    <div class="alert alert-danger">Нет проектов</div>
-                <?php endif; ?>
-            </div>
-        </div>
+<?php endif; ?>
+
+<?php if (Yii::$app->session->hasFlash('success')): ?>
+    <div class="alert alert-success">
+        <?=Yii::$app->session->getFlash('success') ?>
     </div>
+<?php endif; ?>
+
+<div class="jumbotron">
+    <h1>Онлайн Библиотека</h1>
 </div>
+
+<div class="text-justify">
+    <p>Несмотря на то, что в наши дни Интернет уверенно набирает позиции, все больше образованных и интеллигентных людей предпочитают проводить свободное время за чтением книг.</p>
+    <p>Наш сайт предлагает совместить инновации «всемирной паутины» с «поглощением» литературных шедевров. Здесь Вы можете совершенно бесплатно и без регистрации читать онлайн как классические, так и современные тексты.</p>
+    <p>Наша электронная библиотека дает возможность без всякой регистрации читать любовные романы или стихи детям. Тем более что Вы с легкостью сможете найти название интересующей Вас литературы по наименованию книги, имени и фамилии автора или просто по ключевому слову в нашей обширной базе онлайн книг.</p>
+    <p>Благодаря этому удобному сервису Вам не придется приобретать очень дорогостоящие в наше время печатные варианты книг. Вам будет достаточно просто зайти на наш сайт booksonline.com.ua, и электронная библиотека бесплатно предоставит возможность выбрать нужный для прочтения текст. </p>
+</div>
+

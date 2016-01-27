@@ -9,7 +9,6 @@ $config = [
     'language' => 'ru',
     'components' => [
         'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'se-y89TWp57Mj4CQlUW-FNbLccpWqUYE',
         ],
         'cache' => [
@@ -18,15 +17,14 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['/user/signin'],
+
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
         'urlManager' => [
@@ -35,15 +33,26 @@ $config = [
             'showScriptName' => false,
             'suffix' => '',
             'rules' => [
-                '/' => 'site/index',
+                'page/<page:\d+>' => 'book/index',
+                '/' => 'book/index',
 
-                'projects/<page:\d+>' => 'project/index',
-                'projects' => 'project/index',
+                'category/<a:(update|delete)>/<id:\d+>' => 'category/<a>',
+                'category/create' => 'category/create',
+                'category/<id:\d+>' => 'category/view',
+                'categories/<page:\d+>' => 'category/index',
+                'categories' => 'category/index',
 
-                'project/create' => 'project/create',
-                'project/update/<id:\d+>' => 'project/update',
+                'book/<a:(update|delete)>/<id:\d+>' => 'book/<a>',
+                'book/create' => 'book/create',
+                'book/<id:\d+>' => 'book/view',
+                'books/<page:\d+>' => 'book/index',
+                'books' => 'book/index',
 
+                'user/<id:\d+>' => 'user/view',
+                'users/<page:\d+>' => 'user/index',
                 'users' => 'user/index',
+
+                'about' => 'site/about',
             ]
         ],
         'log' => [
@@ -61,7 +70,6 @@ $config = [
 ];
 
 if (YII_ENV_DEV) {
-    // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',

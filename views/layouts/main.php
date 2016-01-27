@@ -24,22 +24,39 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
+
+
+<?php yii\widgets\Pjax::begin(['id' => 'site']) ?>
+
+
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Управление проектами',
+        'brandLabel' => 'Онлайн Библиотека',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+    $user = [
+        ['label' => 'Регистрация', 'url' => ['/user/signup']],
+        ['label' => 'Вход', 'url' => ['/user/signin']],
+    ];
+    if (!Yii::$app->user->isGuest) {
+        $user = [
+            ['label' => Yii::$app->user->identity->email, 'url' => ['/user/profile']],
+            ['label' => 'Выход', 'url' => ['/user/logout']],
+        ];
+    }
+    $items = array_merge([
+        ['label' => 'Книги', 'url' => ['/book/index']],
+        ['label' => 'Категории', 'url' => ['/category/index']],
+        ['label' => 'Авторы', 'url' => ['/user/index']],
+        ['label' => 'О нас', 'url' => ['/site/about']],
+    ], $user);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'На главную', 'url' => ['/site/index']],
-            ['label' => 'Все проекты', 'url' => ['/project/index']],
-            ['label' => 'Пользователи', 'url' => ['/user/index']],
-        ],
+        'items' => $items,
     ]);
     NavBar::end();
     ?>
@@ -48,6 +65,19 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+
+        <?php if (Yii::$app->session->hasFlash('danger')): ?>
+            <div class="alert alert-danger">
+                <?= Yii::$app->session->getFlash('danger') ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (Yii::$app->session->hasFlash('success')): ?>
+            <div class="alert alert-success">
+                <?= Yii::$app->session->getFlash('success') ?>
+            </div>
+        <?php endif; ?>
+
         <?= $content ?>
     </div>
 </div>
@@ -55,10 +85,16 @@ AppAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; <?= date('Y') ?></p>
-
         <p class="pull-right"><?= str_replace('Yii' , 'Yii2', Yii::powered()) ?></p>
     </div>
 </footer>
+
+
+
+<?php yii\widgets\Pjax::end() ?>
+
+
+
 
 <?php $this->endBody() ?>
 </body>
