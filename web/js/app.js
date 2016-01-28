@@ -13,6 +13,9 @@ $(function () {
 
             for (var i in select2Elemets) {
                 var targetSelect2 = $(select2Elemets[i]);
+
+                console.log (targetSelect2);
+
                 if (targetSelect2.length) {
                     var settings = targetSelect2.attr('data-krajee-select2'),
                         id = targetSelect2.attr('id');

@@ -100,6 +100,7 @@ class ProfileForm extends Model
             $user->password_hash = Yii::$app->security->generatePasswordHash($this->password);
         }
         $user->about_me = $this->about_me;
+        $user->date_update = date('Y-m-d H:i:s');
         return $user->save();
     }
 }
