@@ -26,8 +26,8 @@ class m141206_230737_lib extends Migration
             'cover' => $this->string() . ' COMMENT "Обложка"',
             'file' => $this->string() . ' COMMENT "Файл книги"',
             'status' => $this->smallInteger()->notNull()->defaultValue(1) . ' COMMENT "Статус"',
-            'date_create' => $this->timestamp()->defaultValue(null) . ' COMMENT "Дата создания"',
-            'date_update' => $this->timestamp()->defaultValue(null) . ' COMMENT "Дата редактирования"',
+            'date_create' => $this->dateTime()->defaultValue(null) . ' COMMENT "Дата создания"',
+            'date_update' => $this->dateTime()->defaultValue(null) . ' COMMENT "Дата редактирования"',
         ], $tableOptions . ' COMMENT = "Книги"');
 
 

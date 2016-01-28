@@ -31,8 +31,8 @@ class m141206_230734_users extends Migration
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
             'status' => $this->smallInteger()->notNull()->defaultValue(1),
-            'date_create' => $this->timestamp()->defaultValue(null) . ' COMMENT "Дата регистрации"',
-            'date_update' => $this->timestamp()->defaultValue(null) . ' COMMENT "Дата редактирования"',
+            'date_create' => $this->dateTime()->defaultValue(null) . ' COMMENT "Дата регистрации"',
+            'date_update' => $this->dateTime()->defaultValue(null) . ' COMMENT "Дата редактирования"',
         ], $tableOptions);
     }
 
