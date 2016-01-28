@@ -2,6 +2,8 @@
 
 namespace app\models\form;
 
+use yii\validators\StringValidator;
+use yii\validators\CompareValidator;
 use app\models\User;
 use yii\base\Model;
 use Yii;
@@ -53,41 +55,50 @@ class ProfileForm extends Model
     public function rules()
     {
         return [
-            [['password', 'repassword'],'required'],
-
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
-            ['avatar','required'],
-            ['about_me','required'],
+            ['password', 'validatePassword'],
+            ['repassword', 'safe'],
+            ['avatar', 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            ['about_me', 'string', 'max' => 1000],
         ];
     }
 
-
-    public function upload()
+    /**
+     * @param $attribute
+     */
+    public function validatePassword($attribute)
     {
-        if ($this->validate()) {
-            $this->imageFile->saveAs('uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
-            return true;
-        } else {
-            return false;
+        if (empty($this->password)) {
+            return ;
         }
+
+        $StringValidator = new StringValidator([
+            'min' => 6
+        ]);
+        $StringValidator->validateAttribute($this, 'password');
+
+        $CompareValidator = new CompareValidator([
+            'compareAttribute' => 'password'
+        ]);
+        $CompareValidator->validateAttribute($this, 'repassword');
     }
-
-
 
     /**
      * Обновить профиль
      *
      * @return User|null
      */
-    public function update()
+    public function update(User $user)
     {
-        if (!$this->validate()) {
-            return null;
+        if (!empty($this->avatar)) {
+            $path = User::getAvatarPath();
+            $avatarName =  $user->id . '.' . $this->avatar->extension;
+            $this->avatar->saveAs($path . $avatarName);
+            $user->avatar = $avatarName;
         }
-
-        echo 'profile';
-
-        die();
-
+        if (!empty($this->password)) {
+            $user->password_hash = Yii::$app->security->generatePasswordHash($this->password);
+        }
+        $user->about_me = $this->about_me;
+        return $user->save();
     }
 }

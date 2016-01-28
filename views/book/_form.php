@@ -9,6 +9,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
+
 ?>
 
 <?php $form = ActiveForm::begin(['id' => 'form-book', 'options' => ['data-pjax' => true ]]); ?>
@@ -19,12 +20,9 @@ use yii\web\JsExpression;
         <?= $form->field($model, 'description')->textarea() ?>
         <?= $form->field($model, 'cover') ?>
         <?= $form->field($model, 'file') ?>
-
-
-
-
         <?= $form->field($model, 'categories')->widget(Select2::classname(), [
             'options' => ['placeholder' => null, 'multiple' => true],
+            'data' => $model->getCategoriesData(),
             'pluginOptions' => [
                 'tags' => true,
                 'maximumInputLength' => 10,
@@ -34,12 +32,13 @@ use yii\web\JsExpression;
                     'data' => new JsExpression('function(params) { return {q:params.term}; }')
                 ],
                 'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                'templateResult' => new JsExpression('function(category) { return category.name; }'),
-                'templateSelection' => new JsExpression('function (category) { return category.name; }'),
+                'templateResult' => new JsExpression('function(data) { return data.text; }'),
+                'templateSelection' => new JsExpression('function (data) {return data.text;}'),
             ],
         ]); ?>
         <?= $form->field($model, 'users')->widget(Select2::classname(), [
             'options' => ['placeholder' => null, 'multiple' => true],
+            'data' => $model->getUsersData(),
             'pluginOptions' => [
                 'tags' => true,
                 'maximumInputLength' => 10,
@@ -49,11 +48,10 @@ use yii\web\JsExpression;
                     'data' => new JsExpression('function(params) { return {q:params.term}; }')
                 ],
                 'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                'templateResult' => new JsExpression('function(user) { return user.name; }'),
-                'templateSelection' => new JsExpression('function (user) { return user.name; }'),
+                'templateResult' => new JsExpression('function(data) { return data.text; }'),
+                'templateSelection' => new JsExpression('function (data) { return data.text; }'),
             ],
         ]); ?>
-
         <div class="form-group">
             <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'button-save']) ?>
         </div>

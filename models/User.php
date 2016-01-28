@@ -150,4 +150,31 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->hasMany(Book::className(), ['id' => 'book_id'])->viaTable(BooksUsers::tableName(), ['user_id' => 'id']);
     }
+
+    /**
+     * Путь к аватаркам
+     *
+     * @param bool|false $web
+     * @return bool|string
+     */
+    public static function getAvatarPath($web = false)
+    {
+        if ($web) {
+            return Yii::getAlias("@web/avatars/");
+        }
+        return Yii::getAlias("@app/web/avatars/");
+    }
+
+    /**
+     * Получит ьаватар
+     *
+     * @return string
+     */
+    public function getAvatar()
+    {
+        if (!empty($this->avatar)) {
+            return $this->getAvatarPath(true) . $this->avatar;
+        }
+        return $this->getAvatarPath(true) . '..' . DIRECTORY_SEPARATOR . 'no-avatar.jpg';
+    }
 }

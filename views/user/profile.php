@@ -26,6 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'avatar')->fileInput() ?>
 
+            <div class="clear">
+                <div class="user-avatar" style="background-image: url(<?=Yii::$app->user->identity->getAvatar()?>)"></div>
+            </div>
+
+            <?= $form->field($model, 'about_me')->textarea() ?>
+
             <div class="form-group">
                 <?= Html::submitButton('Обновить', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
             </div>

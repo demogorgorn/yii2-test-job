@@ -22,15 +22,15 @@ class CategoryController extends \yii\web\Controller
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['create'],
+                'only' => [],
                 'rules' => [
                     [
-                        'actions' => ['create'],
+                        'actions' => ['create', 'update', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index', 'view'],
                         'allow' => true,
                         'roles' => ['@', '?'],
                     ],

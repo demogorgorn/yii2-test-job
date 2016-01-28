@@ -43,7 +43,7 @@ class UserController extends \yii\web\Controller
     public function actionIndex($q = null, $id = null)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $out = ['results' => ['id' => '', 'name' => '']];
+        $out = ['results' => ['id' => '', 'text' => '']];
         if (!is_null($q)) {
             $query = new Query;
             $query->select('id, name, surname')
@@ -55,13 +55,13 @@ class UserController extends \yii\web\Controller
             $data = $command->queryAll();
             $users = [];
             foreach ($data as &$user) {
-                $users[] = ['id' => $user['id'], 'name' => $user['name'] . ' ' . $user['surname']];
+                $users[] = ['id' => $user['id'], 'text' => $user['name'] . ' ' . $user['surname']];
             }
             $out['results'] = $users;
         } else if ($id > 0) {
             $user = User::findIdentity($id);
             if ($user) {
-                $out['results'] = ['id' => $user->id, 'name' => $user->name . ' ' . $user->surname];
+                $out['results'] = ['id' => $user->id, 'text' => $user->name . ' ' . $user->surname];
             }
         }
         return $out;

@@ -127,8 +127,24 @@ textarea {
     margin: 0 auto 25px  auto;
 }
 
-
 .col-centered{
     float: none;
     margin: 0 auto;
+}
+
+.user-avatar {
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    background-position: center center;
+    border:solid 1px silver;
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+
+.clear:after {
+    content: "";
+    clear: both;
+    display: table;
 }

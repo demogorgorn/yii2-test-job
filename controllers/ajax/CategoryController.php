@@ -8,7 +8,7 @@ use yii\db\Query;
 use Yii;
 
 /**
- * Category Controller
+ * Book Controller
  * @package app\controllers
  */
 class CategoryController extends \yii\web\Controller
@@ -43,7 +43,7 @@ class CategoryController extends \yii\web\Controller
     public function actionIndex($q = null, $id = null)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $out = ['results' => ['id' => '', 'name' => '']];
+        $out = ['results' => ['id' => '', 'text' => '']];
         if (!is_null($q)) {
             $query = new Query;
             $query->select('id, name')
@@ -55,13 +55,13 @@ class CategoryController extends \yii\web\Controller
             $data = $command->queryAll();
             $categories = [];
             foreach ($data as &$category) {
-                $categories[] = ['id' => $category['id'], 'name' => $category['name']];
+                $categories[] = ['id' => $category['id'], 'text' => $category['name']];
             }
             $out['results'] = $categories;
         } else if ($id > 0) {
             $category = Category::findById($id);
             if ($category) {
-                $out['results'] = ['id' => $category->id, 'name' => $category->name];
+                $out['results'] = ['id' => $category->id, 'text' => $category->name];
             }
         }
         return $out;

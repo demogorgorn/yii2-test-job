@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Book;
 use app\models\search\BookSearch;
 use app\models\form\BookForm;
+use yii\base\Exception;
 use yii\web\NotFoundHttpException;
 use Yii;
 
@@ -22,15 +23,15 @@ class BookController extends \yii\web\Controller
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['create'],
+                'only' => [],
                 'rules' => [
                     [
-                        'actions' => ['create'],
+                        'actions' => ['create', 'update', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index', 'view'],
                         'allow' => true,
                         'roles' => ['@', '?'],
                     ],
@@ -72,25 +73,28 @@ class BookController extends \yii\web\Controller
      * Создать
      *
      * @return string|\yii\web\Response
+     * @throws \Exception
      */
     public function actionCreate()
     {
         $model = new BookForm(['scenario' => 'create']);
         if ($model->load(Yii::$app->request->post())) {
-
-            echo '<pre>';
-            print_r($_POST);
-
-
-            die();
-
-            if ($model->validate()) {
-                if ($model->create()) {
-                    Yii::$app->session->setFlash('success', 'Данные успешно сохранены');
-                    return $this->redirect(['/book/index']);
-                } else {
-                    Yii::$app->session->setFlash('danger', 'Возникла ошибка сохранения данных, пожалуйста попробуйте еще раз.');
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                if ($model->validate()) {
+                    if ($model->create()) {
+                        $this->flash('success-save');
+                    } else {
+                        $this->flash(false);
+                        throw new Exception;
+                    }
                 }
+                $transaction->commit();
+                return $this->redirect(['/book/index']);
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                $this->flash(false);
+                return $this->refresh();
             }
         }
         return $this->render('create', [
@@ -106,15 +110,23 @@ class BookController extends \yii\web\Controller
     public function actionUpdate($id)
     {
         $book = $this->findModel($id);
-        $model = new BookForm(['scenario' => 'update']);
+        $model = new BookForm(['scenario' => 'update', 'id' => $book->id]);
         $model->setAttributes($book->getAttributes(), false);
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                if ($model->update($book)) {
-                    Yii::$app->session->setFlash('success', 'Данные успешно сохранены');
-                } else {
-                    Yii::$app->session->setFlash('danger', 'Возникла ошибка сохранения данных, пожалуйста попробуйте еще раз.');
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                if ($model->validate()) {
+                    if ($model->update($book)) {
+                        $this->flash('success-save');
+                    } else {
+                        $this->flash(false);
+                    }
                 }
+                $transaction->commit();
+                return $this->refresh();
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                $this->flash(false);
                 return $this->refresh();
             }
         }
@@ -133,9 +145,9 @@ class BookController extends \yii\web\Controller
         $book = $this->findModel($id);
         $model = new BookForm(['scenario' => 'delete']);
         if ($model->delete($book)) {
-            Yii::$app->session->setFlash('success', 'Данные успешно удалены');
+            $this->flash('success-delete');
         } else {
-            Yii::$app->session->setFlash('danger', 'Возникла ошибка удаления данных, пожалуйста попробуйте еще раз.');
+            $this->flash(false);
         }
         return $this->redirect(['/book/index']);
     }
@@ -154,5 +166,21 @@ class BookController extends \yii\web\Controller
             throw new NotFoundHttpException;
         }
         return $model;
+    }
+
+    /**
+     * Уведомление
+     *
+     * @param string $action
+     */
+    protected function flash($action)
+    {
+        if ($action == 'success-save') {
+            Yii::$app->session->setFlash('success', 'Данные успешно сохранены');
+        } else if ($action == 'success-delete') {
+            Yii::$app->session->setFlash('success', 'Данные успешно удалены.');
+        } else {
+            Yii::$app->session->setFlash('danger', 'Возникла ошибка сохранения данных, пожалуйста попробуйте еще раз.');
+        }
     }
 }

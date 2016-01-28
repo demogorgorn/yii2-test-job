@@ -26,7 +26,7 @@ AppAsset::register($this);
 
 
 
-<?php yii\widgets\Pjax::begin(['id' => 'site']) ?>
+<?php /*yii\widgets\Pjax::begin(['id' => 'site'])*/ ?>
 
 
 <div class="wrap">
@@ -91,7 +91,7 @@ AppAsset::register($this);
 
 
 
-<?php yii\widgets\Pjax::end() ?>
+<?php /*yii\widgets\Pjax::end()*/ ?>
 
 
 

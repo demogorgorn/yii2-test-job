@@ -7,6 +7,7 @@ use app\models\form\ProfileForm;
 use app\models\form\LoginForm;
 use app\models\form\SignupForm;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 use app\models\User;
 use Yii;
 
@@ -24,17 +25,22 @@ class UserController extends \yii\web\Controller
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => [],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['signup', 'signin'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'profile'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['index', 'view'],
+                        'allow' => true,
+                        'roles' => ['@', '?'],
                     ],
                 ],
             ],
@@ -122,24 +128,16 @@ class UserController extends \yii\web\Controller
     {
         $model = new ProfileForm();
         $model->setAttributes(Yii::$app->user->identity->getAttributes(), false);
-
-
-        if ($model->load(Yii::$app->request->post()) && $model->update()) {
-
-            print_r(Yii::$app->request->post());
-
-            die();
+        if ($model->load(Yii::$app->request->post())) {
+            $model->avatar = UploadedFile::getInstance($model, 'avatar');
+            if ($model->validate()) {
+                if ($model->update(Yii::$app->user->identity)) {
+                    Yii::$app->session->setFlash('success', 'Данные успешно сохранены');
+                } else {
+                    Yii::$app->session->setFlash('danger', 'Возникла ошибка сохранения данных, пожалуйста попробуйте еще раз.');
+                }
+            }
         }
-
-
-        /*if ($model->load(Yii::$app->request->post()) && $model->update()) {
-            return $this->refresh();
-        }*/
-
-
-
-
-
         return $this->render('profile', [
             'model' => $model,
         ]);
