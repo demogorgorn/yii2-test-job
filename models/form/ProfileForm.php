@@ -57,6 +57,7 @@ class ProfileForm extends Model
         return [
             ['password', 'validatePassword'],
             ['repassword', 'safe'],
+            ['avatar', 'safe'],
             ['avatar', 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
             ['about_me', 'string', 'max' => 1000],
         ];

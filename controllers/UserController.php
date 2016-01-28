@@ -136,6 +136,7 @@ class UserController extends \yii\web\Controller
                 } else {
                     Yii::$app->session->setFlash('danger', 'Возникла ошибка сохранения данных, пожалуйста попробуйте еще раз.');
                 }
+                return $this->refresh();
             }
         }
         return $this->render('profile', [

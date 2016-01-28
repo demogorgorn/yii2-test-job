@@ -36,7 +36,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         return [
             'id' => 'ID',
             'name' => 'Имя',
-            'surname' => 'фамилия',
+            'surname' => 'Фамилия',
             'email' => 'EMAIL',
             'password' => 'Пароль',
             'avatar' => 'Аватар',

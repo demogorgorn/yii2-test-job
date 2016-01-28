@@ -20,7 +20,8 @@ class CategorySearch extends Model
      */
     public function search()
     {
-        $query = Category::find();
+        $query = Category::find()
+            ->status();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

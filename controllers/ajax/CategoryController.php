@@ -49,7 +49,7 @@ class CategoryController extends \yii\web\Controller
             $query->select('id, name')
                 ->from(Category::tableName())
                 ->where(['like', 'name', $q])
-                ->andWhere(Category::STATUS_ACTIVE)
+                ->andWhere(['status' => Category::STATUS_ACTIVE])
                 ->limit(20);
             $command = $query->createCommand();
             $data = $command->queryAll();
@@ -59,7 +59,7 @@ class CategoryController extends \yii\web\Controller
             }
             $out['results'] = $categories;
         } else if ($id > 0) {
-            $category = Category::findById($id);
+            $category = Category::findById($id, Category::STATUS_ACTIVE);
             if ($category) {
                 $out['results'] = ['id' => $category->id, 'text' => $category->name];
             }

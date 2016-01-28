@@ -167,7 +167,7 @@ class BookForm extends Model
 
         if ($this->scenario == 'create' || $this->scenario == 'update') {
             $this->categoriesValid = Category::findAll($this->categories);
-            $this->usersValid = Category::findAll($this->users);
+            $this->usersValid = User::findAll($this->users);
         }
 
         return true;
@@ -272,4 +272,5 @@ class BookForm extends Model
             }
         }
     }
+
 }
