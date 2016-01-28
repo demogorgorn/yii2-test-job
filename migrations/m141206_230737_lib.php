@@ -25,6 +25,7 @@ class m141206_230737_lib extends Migration
             'description' => $this->text() . ' COMMENT "Описание"',
             'cover' => $this->string() . ' COMMENT "Обложка"',
             'file' => $this->string() . ' COMMENT "Файл книги"',
+            'status' => $this->smallInteger()->notNull()->defaultValue(1) . ' COMMENT "Статус"',
             'date_create' => $this->timestamp()->defaultValue(null) . ' COMMENT "Дата создания"',
             'date_update' => $this->timestamp()->defaultValue(null) . ' COMMENT "Дата редактирования"',
         ], $tableOptions . ' COMMENT = "Книги"');
@@ -33,6 +34,7 @@ class m141206_230737_lib extends Migration
         $this->createTable('{{%categories}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull() . ' COMMENT "Название"',
+            'status' => $this->smallInteger()->notNull()->defaultValue(1) . ' COMMENT "Статус"',
         ], $tableOptions . ' COMMENT = "Категории"');
 
 

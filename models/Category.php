@@ -13,6 +13,9 @@ use Yii;
  */
 class Category extends ActiveRecord
 {
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETE = 0;
+
     /**
      * @inheritdoc
      */
@@ -49,15 +52,19 @@ class Category extends ActiveRecord
     }
 
     /**
-     * Поиск по идентификатуру
+     * Поиск по идентификатору
      *
      * @param $id
+     * @param null $status
      * @return array|null|ActiveRecord
      */
-    public static function findById($id)
+    public static function findById($id, $status = null)
     {
         $query = static::find();
         $query->where(['id' => $id]);
+        if (!is_null($status)) {
+            $query->status($status);
+        }
         return $query->one();
     }
 }

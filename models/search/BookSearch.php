@@ -20,7 +20,8 @@ class BookSearch extends Model
      */
     public function search()
     {
-        $query = Book::find();
+        $query = Book::find()
+            ->status();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

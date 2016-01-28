@@ -53,11 +53,26 @@ class ProfileForm extends Model
     public function rules()
     {
         return [
-            /*[['password', 'repassword'],'required'],
+            [['password', 'repassword'],'required'],
+
+            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
             ['avatar','required'],
-            ['about_me','required'],*/
+            ['about_me','required'],
         ];
     }
+
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $this->imageFile->saveAs('uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
     /**
      * Обновить профиль

@@ -11,5 +11,13 @@ use yii\db\ActiveQuery;
  */
 class BookQuery extends ActiveQuery
 {
-
+    /**
+     * @param int $state
+     * @return $this
+     */
+    public function status($state = Book::STATUS_ACTIVE)
+    {
+        $this->andWhere([Book::tableName() . '.status' => $state]);
+        return $this;
+    }
 }

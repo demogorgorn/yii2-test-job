@@ -30,23 +30,64 @@ class CategoryForm extends Model
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function scenarios()
     {
         return [
-
+            'create' => ['name'],
+            'update' => ['name'],
+            'delete' => [],
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            ['name', 'required'],
+            ['name', 'string', 'min' => 2, 'max' => 32],
+            ['name', 'match', 'pattern' => '/^([а-яА-ЯЁёa-zA-Z0-9\s_-]+)$/u'],
+        ];
+    }
 
+    /**
+     * Создать
+     *
+     * @return bool|null
+     */
     public function create()
     {
-        if (!$this->validate()) {
-            return null;
-        }
-
         $model = new Category();
-        //$model->name = ;
+        $model->name = $this->name;
+        $model->status = Category::STATUS_ACTIVE;
 
-        die();
+        return $model->save();
+    }
+
+    /**
+     * Редактировать
+     *
+     * @param Category $model
+     * @return null
+     */
+    public function update(Category $model)
+    {
+        $model->name = $this->name;
+
+        return $model->save();
+    }
+
+    /**
+     * Удалить
+     *
+     * @param Category $model
+     * @return null
+     */
+    public function delete(Category $model)
+    {
+        $model->status = Category::STATUS_DELETE;
+
+        return $model->save();
     }
 }

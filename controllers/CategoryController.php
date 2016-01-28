@@ -63,28 +63,89 @@ class CategoryController extends \yii\web\Controller
      */
     public function actionView($id)
     {
-        $model = Category::findById($id);
-        if (!$model) {
-            throw new NotFoundHttpException;
-        }
         return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Создать
+     *
+     * @return string|\yii\web\Response
+     */
+    public function actionCreate()
+    {
+        $model = new CategoryForm(['scenario' => 'create']);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($model->create()) {
+                    Yii::$app->session->setFlash('success', 'Данные успешно сохранены');
+                    return $this->redirect(['/category/index']);
+                } else {
+                    Yii::$app->session->setFlash('danger', 'Возникла ошибка сохранения данных, пожалуйста попробуйте еще раз.');
+                }
+            }
+        }
+        return $this->render('create', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Добавить объявление
+     * Редактировать
      *
      * @return string|\yii\web\Response
      */
-    /*public function actionCreate()
+    public function actionUpdate($id)
     {
-        $model = new CategoryForm();
-        if ($model->load(Yii::$app->request->post()) && $model->create()) {
-            return $this->goHome();
+        $book = $this->findModel($id);
+        $model = new CategoryForm(['scenario' => 'update']);
+        $model->setAttributes($book->getAttributes(), false);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($model->update($book)) {
+                    Yii::$app->session->setFlash('success', 'Данные успешно сохранены');
+                } else {
+                    Yii::$app->session->setFlash('danger', 'Возникла ошибка сохранения данных, пожалуйста попробуйте еще раз.');
+                }
+                return $this->refresh();
+            }
         }
-        return $this->render('create', [
+        return $this->render('update', [
             'model' => $model,
         ]);
-    }*/
+    }
+
+    /**
+     * Удалить
+     *
+     * @return string|\yii\web\Response
+     */
+    public function actionDelete($id)
+    {
+        $book = $this->findModel($id);
+        $model = new CategoryForm(['scenario' => 'delete']);
+        if ($model->delete($book)) {
+            Yii::$app->session->setFlash('success', 'Данные успешно удалены');
+        } else {
+            Yii::$app->session->setFlash('danger', 'Возникла ошибка удаления данных, пожалуйста попробуйте еще раз.');
+        }
+        return $this->redirect(['/category/index']);
+    }
+
+    /**
+     * Поиск модели
+     *
+     * @param $id
+     * @return array|null|\yii\db\ActiveRecord
+     * @throws NotFoundHttpException
+     */
+    protected function findModel($id)
+    {
+        $model = Category::findById($id);
+        if (!$model) {
+            throw new NotFoundHttpException;
+        }
+        return $model;
+    }
 }

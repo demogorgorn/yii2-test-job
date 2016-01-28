@@ -36,6 +36,9 @@ $config = [
                 'page/<page:\d+>' => 'book/index',
                 '/' => 'book/index',
 
+                'ajax/category' => 'ajax/category/index',
+                'ajax/user' => 'ajax/user/index',
+
                 'category/<a:(update|delete)>/<id:\d+>' => 'category/<a>',
                 'category/create' => 'category/create',
                 'category/<id:\d+>' => 'category/view',
