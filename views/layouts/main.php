@@ -24,10 +24,13 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
+
+
 <?php yii\widgets\Pjax::begin(['id' => 'site']) ?>
 
 
 <div class="wrap">
+
     <?php
     NavBar::begin([
         'brandLabel' => 'Онлайн Библиотека',
@@ -66,24 +69,23 @@ AppAsset::register($this);
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
-
         <?php yii\widgets\Pjax::end() ?>
 
-        <?php if (Yii::$app->session->hasFlash('danger')): ?>
-            <div class="alert alert-danger">
-                <?= Yii::$app->session->getFlash('danger') ?>
-            </div>
-        <?php endif; ?>
+            <?php if (Yii::$app->session->hasFlash('danger')): ?>
+                <div class="alert alert-danger">
+                    <?= Yii::$app->session->getFlash('danger') ?>
+                </div>
+            <?php endif; ?>
 
-        <?php if (Yii::$app->session->hasFlash('success')): ?>
-            <div class="alert alert-success">
-                <?= Yii::$app->session->getFlash('success') ?>
-            </div>
-        <?php endif; ?>
+            <?php if (Yii::$app->session->hasFlash('success')): ?>
+                <div class="alert alert-success">
+                    <?= Yii::$app->session->getFlash('success') ?>
+                </div>
+            <?php endif; ?>
 
-        <div id="reload">
-            <?= $content ?>
-        </div>
+            <div id="reload">
+                <?= $content ?>
+            </div>
     </div>
 
 
@@ -97,9 +99,7 @@ AppAsset::register($this);
     </div>
 </footer>
 
-
 <?php yii\widgets\Pjax::end() ?>
-
 
 <?php $this->endBody() ?>
 </body>

@@ -7,12 +7,24 @@ $(function () {
     });
 
 
-    $(document).on('pjax:click', function (e) {
-        var $target = $(e.target);
+    $(document).on('click', '#breadcrumbs a', function (e) {
+        e.preventDefault();
+
+        var url = $(this).attr('href');
+        $.pjax.reload({url: url, container: "#site"});
     });
 
 
-    $(document).on('pjax:end', function () {
+    $(document).on('pjax:click', function (e) {
+        var $target = $(e.target);
+
+        //
+    });
+
+
+    $(document).on('pjax:end', function (e) {
+        var $target = $(e.target);
+
         var reload = $('#reload');
         reload.css({paddingTop: 200});
         reload.animate({paddingTop: "0"});
