@@ -24,10 +24,6 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-
-<?php /*yii\widgets\Pjax::begin(['id' => 'site'])*/ ?>
-
-
 <div class="wrap">
     <?php
     NavBar::begin([
@@ -62,9 +58,12 @@ AppAsset::register($this);
 
 
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+
+        <?php yii\widgets\Pjax::begin(['id' => 'breadcrumbs']) ?>
+            <?= Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ]) ?>
+        <?php yii\widgets\Pjax::end() ?>
 
         <?php if (Yii::$app->session->hasFlash('danger')): ?>
             <div class="alert alert-danger">
@@ -93,9 +92,6 @@ AppAsset::register($this);
         <p class="pull-right"><?= str_replace('Yii' , 'Yii2', Yii::powered()) ?></p>
     </div>
 </footer>
-
-
-<?php /*yii\widgets\Pjax::end()*/ ?>
 
 
 <?php $this->endBody() ?>

@@ -15,8 +15,11 @@ class Controller extends \yii\web\Controller
      */
     public function render($view, $params = [])
     {
+        if (Yii::$app->request->isPjax) {
+            return parent::render($view, $params);
+        }
         if (Yii::$app->request->isAjax) {
-            return $this->renderAjax($view, $params);
+            return  $this->renderAjax($view, $params);
         }
         return parent::render($view, $params);
     }

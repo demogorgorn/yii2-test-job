@@ -19,6 +19,8 @@ $(function () {
 
             $('.alert.alert-success').hide();
             $('.alert.alert-danger').hide();
+
+            $.pjax.reload({container:"#breadcrumbs"});
         });
     });
 
