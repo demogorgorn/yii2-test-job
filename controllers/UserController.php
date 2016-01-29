@@ -15,7 +15,7 @@ use Yii;
  * User Controller
  * @package app\controllers
  */
-class UserController extends \yii\web\Controller
+class UserController extends \app\components\Controller
 {
     /**
      * @inheritdoc

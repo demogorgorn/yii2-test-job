@@ -25,8 +25,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 
-
-<?php yii\widgets\Pjax::begin(['id' => 'site']) ?>
+<?php /*yii\widgets\Pjax::begin(['id' => 'site'])*/ ?>
 
 
 <div class="wrap">
@@ -61,6 +60,7 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
+
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
@@ -78,8 +78,13 @@ AppAsset::register($this);
             </div>
         <?php endif; ?>
 
-        <?= $content ?>
+        <div id="reload">
+            <?= $content ?>
+        </div>
     </div>
+
+
+
 </div>
 
 <footer class="footer">
@@ -90,10 +95,7 @@ AppAsset::register($this);
 </footer>
 
 
-
-<?php yii\widgets\Pjax::end() ?>
-
-
+<?php /*yii\widgets\Pjax::end()*/ ?>
 
 
 <?php $this->endBody() ?>

@@ -1,29 +1,33 @@
 $(function () {
 
-    $(document)
-        .on('pjax:start', function() { })
-        .on('pjax:end',   function() {
+    $(document).on('click', 'a[href]', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        $('.navbar-nav.navbar-right.nav').find('li').removeClass('active');
+        $.get($this.attr('href'), function( request, status, xhr ) {
 
-            $('.kv-plugin-loading').hide();
+            history.pushState({}, "", $this.attr('href'));
 
-            var select2Elemets = [
-                '#bookform-categories',
-                '#bookform-users'
-            ];
+            var reload = $('#reload');
+            reload.css({paddingTop: 200});
 
-            for (var i in select2Elemets) {
-                var targetSelect2 = $(select2Elemets[i]);
+            //request = request.replace(/<script(.*)<\/script>/g,'');
+            //request = request.replace(/<link(.*?)>/g,'');
 
-                console.log (targetSelect2);
-
-                if (targetSelect2.length) {
-                    var settings = targetSelect2.attr('data-krajee-select2'),
-                        id = targetSelect2.attr('id');
-                        settings = window[settings];
-                    $.when(targetSelect2.select2(settings));
-                }
-            }
+            reload.html(request);
+            reload.animate({paddingTop:"0"});
         });
+    });
+
+    $(document).on('click', '.navbar-nav.navbar-right.nav a', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        $this.parents('li').addClass('active');
+    });
+
+    $( document ).ajaxComplete(function( event, xhr, settings) {
+
+    });
 
     /**
      * Шаблон должностей

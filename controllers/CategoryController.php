@@ -12,7 +12,7 @@ use Yii;
  * Category Controller
  * @package app\controllers
  */
-class CategoryController extends \yii\web\Controller
+class CategoryController extends \app\components\Controller
 {
     /**
      * @inheritdoc

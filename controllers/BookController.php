@@ -13,7 +13,7 @@ use Yii;
  * Book Controller
  * @package app\controllers
  */
-class BookController extends \yii\web\Controller
+class BookController extends \app\components\Controller
 {
     /**
      * @inheritdoc
@@ -97,6 +97,7 @@ class BookController extends \yii\web\Controller
                 return $this->refresh();
             }
         }
+
         return $this->render('create', [
             'model' => $model,
         ]);

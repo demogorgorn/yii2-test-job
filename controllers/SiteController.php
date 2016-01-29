@@ -8,7 +8,7 @@ use Yii;
  * Главный контроллер
  * @package app\controllers
  */
-class SiteController extends \yii\web\Controller
+class SiteController extends \app\components\Controller
 {
     /**
      * @inheritdoc

@@ -9,7 +9,6 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
-
 ?>
 
 <?php $form = ActiveForm::begin(['id' => 'form-book', 'options' => ['data-pjax' => true ]]); ?>
