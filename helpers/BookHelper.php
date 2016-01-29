@@ -21,7 +21,7 @@ class BookHelper
         }
         $result = [];
         foreach ($books as $book) {
-            $result[] = Html::a(Html::encode($book['name']), ['/book/view', 'id' => $book['id']], ['class' => 'ajax']);
+            $result[] = Html::a(Html::encode($book['name']), ['/book/view', 'id' => $book['id']]);
         }
         return $result;
     }

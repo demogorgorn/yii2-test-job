@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="jumbotron">
         <h1><?= Html::encode($this->title) ?></h1>
         <?php if (!Yii::$app->user->isGuest): ?>
-            <?=Html::a('Создать', ['/book/create'], ['class' => 'btn btn-success'])?>
+            <?=Html::a('Создать', ['/book/create'], ['class' => 'btn btn-success ajax'])?>
         <?php endif; ?>
     </div>
 
