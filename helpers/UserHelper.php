@@ -21,7 +21,7 @@ class UserHelper
         }
         $result = [];
         foreach ($users as $user) {
-            $result[] = Html::a(Html::encode($user['name']) .' '. Html::encode($user['surname']), ['/user/view', 'id' => $user['id']]);
+            $result[] = Html::a(Html::encode($user['name']) .' '. Html::encode($user['surname']), ['/user/view', 'id' => $user['id']], ['class' => 'ajax']);
         }
         return $result;
     }

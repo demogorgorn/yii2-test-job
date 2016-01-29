@@ -1,69 +1,61 @@
 $(function () {
 
-    $(document).on('click', 'a[href]', function (e) {
+    $(document).on('click', 'a.ajax', function (e) {
+        var $target = $(e.target);
         e.preventDefault();
-        var $this = $(this);
-        $('.navbar-nav.navbar-right.nav').find('li').removeClass('active');
-        $.get($this.attr('href'), function( request, status, xhr ) {
-
-            history.pushState({}, "", $this.attr('href'));
-
-            var reload = $('#reload');
-            reload.css({paddingTop: 200});
-
-            //request = request.replace(/<script(.*)<\/script>/g,'');
-            //request = request.replace(/<link(.*?)>/g,'');
-
-            reload.html(request);
-            reload.animate({paddingTop:"0"});
-
-            $('.alert.alert-success').hide();
-            $('.alert.alert-danger').hide();
-
-            $.pjax.reload({container:"#breadcrumbs"});
-        });
+        getContent($target.attr('href'));
     });
 
-    $(document).on('click', '.navbar-nav.navbar-right.nav a', function (e) {
-        e.preventDefault();
-        var $this = $(this);
-        $this.parents('li').addClass('active');
+
+    $(document).on('pjax:click', function (e) {
+        var $target = $(e.target);
     });
 
-    $( document ).ajaxComplete(function( event, xhr, settings) {
 
+    $(document).on('pjax:end', function () {
+        var reload = $('#reload');
+        reload.css({paddingTop: 200});
+        reload.animate({paddingTop: "0"});
     });
 
-    /**
-     * Шаблон должностей
-     * @type {null}
-     */
-    var templatePosition = null;
 
-    /**
-     * Удалить должность
-     */
-    $(document).on('click', '.remove-position', function () {
-        var $this = $(this);
-        var $li = $this.parents('li');
-        var $position = $this.parents('.position');
-        if ($li.length) {
-            $li.remove();
-        }
-        else if ($position.length) {
-            $position.remove();
-        }
+    $(document).bind('ajaxStart', function (e, xhr, settings) {
+        loading(true);
     });
 
-    /**
-     * Добавить должность
-     */
-    $(document).on('click', '#add-position', function () {
-        var $this = $(this);
 
-        var position = $('#positions').find('.position.row').first().clone();
-        position.find('input').val('');
-        position.appendTo('#positions');
+    $(document).bind('ajaxComplete', function (e, xhr, settings) {
+        loading(false);
     });
-
 });
+
+
+function getContent(url) {
+    $.get(url, function (request, status, xhr) {
+
+        history.pushState({}, "", url);
+
+        var reload = $('#reload');
+        reload.css({paddingTop: 200});
+        reload.html(xhr.responseText);
+        reload.animate({paddingTop: "0"});
+
+        $('.alert.alert-success').hide();
+        $('.alert.alert-danger').hide();
+
+        $.pjax.reload({container: "#breadcrumbs"});
+    });
+}
+
+
+function loading(show) {
+    show = show || false;
+
+    if (show) {
+        var loading = document.createElement('div');
+        loading = $(loading).attr('id', 'loading');
+        $('body').append(loading);
+    } else {
+        $('#loading').remove();
+    }
+}

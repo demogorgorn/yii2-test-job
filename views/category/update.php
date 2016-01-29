@@ -7,6 +7,9 @@ $this->title = 'Редактировать категорию';
 
 use yii\helpers\Url;
 use yii\helpers\Html;
+
+$this->params['breadcrumbs'][] = ['label' => 'Категории', 'url' => ['/category/index']];
+$this->params['breadcrumbs'][] = Html::encode($model->name);
 ?>
 
 

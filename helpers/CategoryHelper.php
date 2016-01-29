@@ -22,7 +22,7 @@ class CategoryHelper
         $result = [];
 
         foreach ($categories as $category) {
-            $result[] = Html::a(Html::encode($category['name']), ['/category/view', 'id' => $category['id']]);
+            $result[] = Html::a(Html::encode($category['name']), ['/category/view', 'id' => $category['id']], ['class' => 'ajax']);
         }
         return $result;
     }

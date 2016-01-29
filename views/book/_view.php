@@ -55,7 +55,7 @@ use app\helpers\UserHelper;
     <?php if (!Yii::$app->user->isGuest): ?>
         <br>
         <div class="text-center">
-            <?=Html::a('Редактировать', ['/book/update', 'id' => $model->id], ['class' => 'btn btn-default'])?>
+            <?=Html::a('Редактировать', ['/book/update', 'id' => $model->id], ['class' => 'btn btn-default ajax'])?>
             &nbsp;
             <?=Html::a('Удалить', ['/book/delete', 'id' => $model->id], ['class' => 'btn btn-default', 'data-confirm' => 'Подтверждение...'])?>
         </div>

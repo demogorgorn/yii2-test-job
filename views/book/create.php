@@ -3,10 +3,12 @@
 /* @var $this yii\web\View*/
 /* @var app\models\form\BookForm $model*/
 
-$this->title = 'Создать новую книгу';
-
 use yii\helpers\Url;
 use yii\helpers\Html;
+
+$this->title = 'Создать новую книгу';
+$this->params['breadcrumbs'][] = ['label' => 'Книги', 'url' => ['/book/index']];
+$this->params['breadcrumbs'][] = 'Создать';
 ?>
 
 

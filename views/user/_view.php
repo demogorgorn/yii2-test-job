@@ -15,7 +15,7 @@ use app\helpers\BookHelper;
 <div class="card card-block">
     <h3 class="card-title">
         <?php if ($short): ?>
-            <?=Html::a(Html::encode($model->name) . ' ' . Html::encode($model->surname), ['/user/view', 'id' => $model->id]) ?>
+            <?=Html::a(Html::encode($model->name) . ' ' . Html::encode($model->surname), ['/user/view', 'id' => $model->id], ['class' => 'ajax']) ?>
         <?php  else: ?>
             <?=Html::encode($model->name) , ' ' , Html::encode($model->surname)?>
         <?php endif; ?>
