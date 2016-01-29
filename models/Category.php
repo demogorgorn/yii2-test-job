@@ -48,7 +48,7 @@ class Category extends ActiveRecord
      */
     public function getBooks()
     {
-        return $this->hasMany(Book::className(), ['id' => 'book_id'])->viaTable(BooksCategories::tableName(), ['book_id' => 'id']);
+        return $this->hasMany(Book::className(), ['id' => 'book_id'])->viaTable(BooksCategories::tableName(), ['category_id' => 'id']);
     }
 
     /**
