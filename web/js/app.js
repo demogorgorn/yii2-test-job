@@ -17,8 +17,8 @@ $(function () {
             reload.html(request);
             reload.animate({paddingTop:"0"});
 
-            $('.alert .alert-success').hide();
-            $('.alert .alert-danger').hide();
+            $('.alert.alert-success').hide();
+            $('.alert.alert-danger').hide();
         });
     });
 
